@@ -1,19 +1,47 @@
 package throw
 
-// ErrorType represents the default type of an error.
+import "net/http"
+
+// ErrorType is an example of how an error type can be defined.
+// It has types that can be mapped to HTTP status codes.
 type ErrorType string
 
 const (
-	ConflictErrorType     ErrorType = "Conflict"
-	ForbiddenErrorType    ErrorType = "Forbidden"
-	InternalErrorType     ErrorType = "Internal"
-	NotFoundErrorType     ErrorType = "Not Found"
+	// ConflictErrorType is an error type that represents a conflict (409)
+	ConflictErrorType ErrorType = "Conflict"
+	// ForbiddenErrorType is an error type that represents a forbidden access (403)
+	ForbiddenErrorType ErrorType = "Forbidden"
+	// NotFoundErrorType is an error type that represents a not found error (404)
+	NotFoundErrorType ErrorType = "Not Found"
+	// UnauthorizedErrorType is an error type that represents an unauthorized access (401)
 	UnauthorizedErrorType ErrorType = "Unauthorized"
-	ValidationErrorType   ErrorType = "Validation"
+	// ValidationErrorType is an error type that represents a validation error (400)
+	ValidationErrorType ErrorType = "Validation"
+	// InternalErrorType is an error type that represents an internal server error (500)
+	InternalErrorType ErrorType = "Internal"
 )
 
+// String returns the string representation of the ErrorType
 func (errorType ErrorType) String() string {
 	return string(errorType)
+}
+
+// StatusCode returns the HTTP status code associated with the ErrorType.
+// Defaults to http.StatusInternalServerError
+func (errorType ErrorType) StatusCode() int {
+	switch errorType {
+	case ConflictErrorType:
+		return http.StatusConflict
+	case ForbiddenErrorType:
+		return http.StatusForbidden
+	case NotFoundErrorType:
+		return http.StatusNotFound
+	case UnauthorizedErrorType:
+		return http.StatusUnauthorized
+	case ValidationErrorType:
+		return http.StatusBadRequest
+	}
+	return http.StatusInternalServerError
 }
 
 // Conflict returns a new [ErrorBuilder] with the Conflict error type.
