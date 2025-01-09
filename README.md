@@ -24,6 +24,7 @@ go get github.com/pauloRohling/throw
 - `Str`
 - `Int`, `Int8`, `Int16`, `Int32`, `Int64`
 - `Uint`, `Uint8`, `Uint16`, `Uint32`, `Uint64`
+- `Float32`, `Float64`
 
 ### Advanced Attributes
 

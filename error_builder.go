@@ -124,6 +124,20 @@ func (builder *ErrorBuilder) Int64(key string, value int64) *ErrorBuilder {
 	return builder
 }
 
+// Float32 adds a [attributes.Float32] attribute to the error and returns the builder for chaining.
+func (builder *ErrorBuilder) Float32(key string, value float32) *ErrorBuilder {
+	attr := attributes.NewFloat32(key, value)
+	builder.err.add(attr)
+	return builder
+}
+
+// Float64 adds a [attributes.Float64] attribute to the error and returns the builder for chaining.
+func (builder *ErrorBuilder) Float64(key string, value float64) *ErrorBuilder {
+	attr := attributes.NewFloat64(key, value)
+	builder.err.add(attr)
+	return builder
+}
+
 // Msg sets the error message and returns the error. It ends the chain of methods.
 func (builder *ErrorBuilder) Msg(message string) *Error {
 	builder.err.message = message

@@ -32,6 +32,8 @@ func TestError(t *testing.T) {
 		Uint16("uage16", 16).
 		Uint32("uage32", 32).
 		Uint64("uage64", 64).
+		Float32("float32", 20.32).
+		Float64("float64", 20.32).
 		Msg("Some error message")
 
 	errFormatted := NewErrorBuilder("testErrorType").
@@ -43,7 +45,7 @@ func TestError(t *testing.T) {
 	assert.Equal(t, someError, err.Unwrap())
 
 	attrs := err.Attributes()
-	assert.Equal(t, 13, len(attrs))
+	assert.Equal(t, 15, len(attrs))
 	assert.IsType(t, &attributes.String{}, attrs[0])
 	assert.IsType(t, &attributes.Any{}, attrs[1])
 	assert.IsType(t, &attributes.Json{}, attrs[2])
@@ -57,4 +59,6 @@ func TestError(t *testing.T) {
 	assert.IsType(t, &attributes.Uint16{}, attrs[10])
 	assert.IsType(t, &attributes.Uint32{}, attrs[11])
 	assert.IsType(t, &attributes.Uint64{}, attrs[12])
+	assert.IsType(t, &attributes.Float32{}, attrs[13])
+	assert.IsType(t, &attributes.Float64{}, attrs[14])
 }
