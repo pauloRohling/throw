@@ -16,8 +16,15 @@ type ErrorBuilder struct {
 	err *Error
 }
 
-// NewErrorBuilder creates a new [ErrorBuilder] with the given error type.
-func NewErrorBuilder(errType string) *ErrorBuilder {
+// NewErrorBuilder creates a new [ErrorBuilder] without error type.
+func NewErrorBuilder() *ErrorBuilder {
+	return &ErrorBuilder{
+		err: newError(""),
+	}
+}
+
+// NewTypedErrorBuilder creates a new [ErrorBuilder] with the given error type.
+func NewTypedErrorBuilder(errType string) *ErrorBuilder {
 	return &ErrorBuilder{
 		err: newError(errType),
 	}

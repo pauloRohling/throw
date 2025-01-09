@@ -17,7 +17,7 @@ func TestError(t *testing.T) {
 
 	someError := errors.New("some error")
 
-	err := NewErrorBuilder("testErrorType").
+	err := NewTypedErrorBuilder("testErrorType").
 		Err(someError).
 		Str("key", "value").
 		Any("struct", aStructValue).
@@ -36,7 +36,7 @@ func TestError(t *testing.T) {
 		Float64("float64", 20.32).
 		Msg("Some error message")
 
-	errFormatted := NewErrorBuilder("testErrorType").
+	errFormatted := NewErrorBuilder().
 		Msgf("Some error message %s", "value")
 
 	assert.Equal(t, "Some error message", err.Error())
