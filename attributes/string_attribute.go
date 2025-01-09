@@ -1,5 +1,6 @@
 package attributes
 
+// String represents an attribute with string type.
 type String struct {
 	key   string
 	value string

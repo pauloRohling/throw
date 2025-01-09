@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 )
 
+// Json represents an attribute with JSON type. It will be converted to a string using json.Marshal.
 type Json struct {
 	key   string
 	value any

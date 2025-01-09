@@ -4,6 +4,7 @@ import (
 	"fmt"
 )
 
+// Int represents an attribute with int type.
 type Int struct {
 	key   string
 	value int

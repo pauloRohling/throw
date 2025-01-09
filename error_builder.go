@@ -47,6 +47,48 @@ func (builder *ErrorBuilder) Any(key string, value any) *ErrorBuilder {
 	return builder
 }
 
+// Json adds a [attributes.Json] attribute to the error and returns the builder for chaining.
+func (builder *ErrorBuilder) Json(key string, value any) *ErrorBuilder {
+	attr := attributes.NewJson(key, value)
+	builder.err.add(attr)
+	return builder
+}
+
+// Uint adds a [attributes.Uint] attribute to the error and returns the builder for chaining.
+func (builder *ErrorBuilder) Uint(key string, value uint) *ErrorBuilder {
+	attr := attributes.NewUint(key, value)
+	builder.err.add(attr)
+	return builder
+}
+
+// Uint8 adds a [attributes.Uint8] attribute to the error and returns the builder for chaining.
+func (builder *ErrorBuilder) Uint8(key string, value uint8) *ErrorBuilder {
+	attr := attributes.NewUint8(key, value)
+	builder.err.add(attr)
+	return builder
+}
+
+// Uint16 adds a [attributes.Uint16] attribute to the error and returns the builder for chaining.
+func (builder *ErrorBuilder) Uint16(key string, value uint16) *ErrorBuilder {
+	attr := attributes.NewUint16(key, value)
+	builder.err.add(attr)
+	return builder
+}
+
+// Uint32 adds a [attributes.Uint32] attribute to the error and returns the builder for chaining.
+func (builder *ErrorBuilder) Uint32(key string, value uint32) *ErrorBuilder {
+	attr := attributes.NewUint32(key, value)
+	builder.err.add(attr)
+	return builder
+}
+
+// Uint64 adds a [attributes.Uint64] attribute to the error and returns the builder for chaining.
+func (builder *ErrorBuilder) Uint64(key string, value uint64) *ErrorBuilder {
+	attr := attributes.NewUint64(key, value)
+	builder.err.add(attr)
+	return builder
+}
+
 // Int adds a [attributes.Int] attribute to the error and returns the builder for chaining.
 func (builder *ErrorBuilder) Int(key string, value int) *ErrorBuilder {
 	attr := attributes.NewInt(key, value)
@@ -54,9 +96,30 @@ func (builder *ErrorBuilder) Int(key string, value int) *ErrorBuilder {
 	return builder
 }
 
-// Json adds a [attributes.Json] attribute to the error and returns the builder for chaining.
-func (builder *ErrorBuilder) Json(key string, value any) *ErrorBuilder {
-	attr := attributes.NewJson(key, value)
+// Int8 adds a [attributes.Int8] attribute to the error and returns the builder for chaining.
+func (builder *ErrorBuilder) Int8(key string, value int8) *ErrorBuilder {
+	attr := attributes.NewInt8(key, value)
+	builder.err.add(attr)
+	return builder
+}
+
+// Int16 adds a [attributes.Int16] attribute to the error and returns the builder for chaining.
+func (builder *ErrorBuilder) Int16(key string, value int16) *ErrorBuilder {
+	attr := attributes.NewInt16(key, value)
+	builder.err.add(attr)
+	return builder
+}
+
+// Int32 adds a [attributes.Int32] attribute to the error and returns the builder for chaining.
+func (builder *ErrorBuilder) Int32(key string, value int32) *ErrorBuilder {
+	attr := attributes.NewInt32(key, value)
+	builder.err.add(attr)
+	return builder
+}
+
+// Int64 adds a [attributes.Int64] attribute to the error and returns the builder for chaining.
+func (builder *ErrorBuilder) Int64(key string, value int64) *ErrorBuilder {
+	attr := attributes.NewInt64(key, value)
 	builder.err.add(attr)
 	return builder
 }

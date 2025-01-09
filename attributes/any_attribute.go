@@ -4,6 +4,7 @@ import (
 	"fmt"
 )
 
+// Any represents an attribute with any type. It will be converted to a string using `%+v`.
 type Any struct {
 	key   string
 	value any

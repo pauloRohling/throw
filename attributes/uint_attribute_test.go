@@ -5,10 +5,10 @@ import (
 	"testing"
 )
 
-func TestIntAttribute(t *testing.T) {
+func TestUintAttribute(t *testing.T) {
 	testCases := map[string]struct {
 		key           string
-		value         int
+		value         uint
 		expectedValue string
 	}{
 		"should return the key and value": {
@@ -20,7 +20,7 @@ func TestIntAttribute(t *testing.T) {
 
 	for testName, testCase := range testCases {
 		t.Run(testName, func(t *testing.T) {
-			attribute := NewInt(testCase.key, testCase.value)
+			attribute := NewUint(testCase.key, testCase.value)
 			assert.Equal(t, testCase.key, attribute.Key())
 			assert.Equal(t, testCase.expectedValue, attribute.Value())
 		})
