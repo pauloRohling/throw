@@ -1,4 +1,4 @@
-package main
+package throw
 
 // ErrorType represents the default type of an error.
 type ErrorType string

@@ -1,4 +1,4 @@
-package main
+package throw
 
 // Attribute represents an attribute that can be added to an error.
 type Attribute interface {
