@@ -7,18 +7,12 @@ import "net/http"
 type ErrorType string
 
 const (
-	// ConflictErrorType is an error type that represents a conflict (409)
-	ConflictErrorType ErrorType = "Conflict"
-	// ForbiddenErrorType is an error type that represents a forbidden access (403)
-	ForbiddenErrorType ErrorType = "Forbidden"
-	// NotFoundErrorType is an error type that represents a not found error (404)
-	NotFoundErrorType ErrorType = "Not Found"
-	// UnauthorizedErrorType is an error type that represents an unauthorized access (401)
-	UnauthorizedErrorType ErrorType = "Unauthorized"
-	// ValidationErrorType is an error type that represents a validation error (400)
-	ValidationErrorType ErrorType = "Validation"
-	// InternalErrorType is an error type that represents an internal server error (500)
-	InternalErrorType ErrorType = "Internal"
+	ConflictErrorType     ErrorType = "Conflict"     // ConflictErrorType is an error type that represents a conflict (409)
+	ForbiddenErrorType    ErrorType = "Forbidden"    // ForbiddenErrorType is an error type that represents a forbidden access (403)
+	NotFoundErrorType     ErrorType = "Not Found"    // NotFoundErrorType is an error type that represents a not found error (404)
+	UnauthorizedErrorType ErrorType = "Unauthorized" // UnauthorizedErrorType is an error type that represents an unauthorized access (401)
+	ValidationErrorType   ErrorType = "Validation"   // ValidationErrorType is an error type that represents a validation error (400)
+	InternalErrorType     ErrorType = "Internal"     // InternalErrorType is an error type that represents an internal server error (500)
 )
 
 // String returns the string representation of the ErrorType
