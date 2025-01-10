@@ -37,6 +37,11 @@ go get github.com/pauloRohling/throw
 - `Any`: Formats any type using the `%+v` format.
 - `Json`: Formats any type as json using the `json.Marshal` function.
 
+## Examples
+
+Please refer to the [examples](https://github.com/pauloRohling/throw/blob/main/EXAMPLES.md) for more information on how
+to use Throw.
+
 ## Testing
 
 Throw provides a helper function to assert that the error is of the expected type in a more idiomatic way.
@@ -58,11 +63,6 @@ func TestAlwaysFail(t *testing.T) {
 	throw.AssertType(t, err, "MyCustomError")
 }
 ```
-
-## Examples
-
-Please refer to the [examples](https://github.com/pauloRohling/throw/blob/main/EXAMPLES.md) for more information on how
-to use Throw.
 
 ## License
 
