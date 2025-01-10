@@ -1,7 +1,6 @@
 package attributes
 
 import (
-	"github.com/stretchr/testify/assert"
 	"math"
 	"testing"
 )
@@ -32,8 +31,8 @@ func TestInt16Attribute(t *testing.T) {
 	for testName, testCase := range testCases {
 		t.Run(testName, func(t *testing.T) {
 			attribute := NewInt16(testCase.key, testCase.value)
-			assert.Equal(t, testCase.key, attribute.Key())
-			assert.Equal(t, testCase.expectedValue, attribute.Value())
+			assertEqual(t, testCase.key, attribute.Key())
+			assertEqual(t, testCase.expectedValue, attribute.Value())
 		})
 	}
 }

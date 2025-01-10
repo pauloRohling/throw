@@ -3,7 +3,6 @@ package throw
 import (
 	"errors"
 	"github.com/pauloRohling/throw/attributes"
-	"github.com/stretchr/testify/assert"
 	"testing"
 )
 
@@ -39,26 +38,27 @@ func TestError(t *testing.T) {
 	errFormatted := NewErrorBuilder().
 		Msgf("Some error message %s", "value")
 
-	assert.Equal(t, "Some error message", err.Error())
-	assert.Equal(t, "Some error message value", errFormatted.Error())
-	assert.Equal(t, "testErrorType", err.Type())
-	assert.Equal(t, someError, err.Unwrap())
+	assertEqual(t, "Some error message", err.Error())
+	assertEqual(t, "Some error message value", errFormatted.Error())
+	assertEqual(t, "testErrorType", err.Type())
+	AssertType(t, err, "testErrorType")
+	assertEqual(t, someError, err.Unwrap())
 
 	attrs := err.Attributes()
-	assert.Equal(t, 15, len(attrs))
-	assert.IsType(t, &attributes.String{}, attrs[0])
-	assert.IsType(t, &attributes.Any{}, attrs[1])
-	assert.IsType(t, &attributes.Json{}, attrs[2])
-	assert.IsType(t, &attributes.Int{}, attrs[3])
-	assert.IsType(t, &attributes.Int8{}, attrs[4])
-	assert.IsType(t, &attributes.Int16{}, attrs[5])
-	assert.IsType(t, &attributes.Int32{}, attrs[6])
-	assert.IsType(t, &attributes.Int64{}, attrs[7])
-	assert.IsType(t, &attributes.Uint{}, attrs[8])
-	assert.IsType(t, &attributes.Uint8{}, attrs[9])
-	assert.IsType(t, &attributes.Uint16{}, attrs[10])
-	assert.IsType(t, &attributes.Uint32{}, attrs[11])
-	assert.IsType(t, &attributes.Uint64{}, attrs[12])
-	assert.IsType(t, &attributes.Float32{}, attrs[13])
-	assert.IsType(t, &attributes.Float64{}, attrs[14])
+	assertEqual(t, 15, len(attrs))
+	assertIsType(t, &attributes.String{}, attrs[0])
+	assertIsType(t, &attributes.Any{}, attrs[1])
+	assertIsType(t, &attributes.Json{}, attrs[2])
+	assertIsType(t, &attributes.Int{}, attrs[3])
+	assertIsType(t, &attributes.Int8{}, attrs[4])
+	assertIsType(t, &attributes.Int16{}, attrs[5])
+	assertIsType(t, &attributes.Int32{}, attrs[6])
+	assertIsType(t, &attributes.Int64{}, attrs[7])
+	assertIsType(t, &attributes.Uint{}, attrs[8])
+	assertIsType(t, &attributes.Uint8{}, attrs[9])
+	assertIsType(t, &attributes.Uint16{}, attrs[10])
+	assertIsType(t, &attributes.Uint32{}, attrs[11])
+	assertIsType(t, &attributes.Uint64{}, attrs[12])
+	assertIsType(t, &attributes.Float32{}, attrs[13])
+	assertIsType(t, &attributes.Float64{}, attrs[14])
 }

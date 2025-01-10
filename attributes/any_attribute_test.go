@@ -1,7 +1,6 @@
 package attributes
 
 import (
-	"github.com/stretchr/testify/assert"
 	"testing"
 )
 
@@ -46,8 +45,8 @@ func TestAnyAttribute(t *testing.T) {
 	for testName, testCase := range testCases {
 		t.Run(testName, func(t *testing.T) {
 			attribute := NewAny(testCase.key, testCase.value)
-			assert.Equal(t, testCase.key, attribute.Key())
-			assert.Equal(t, testCase.expectedValue, attribute.Value())
+			assertEqual(t, testCase.key, attribute.Key())
+			assertEqual(t, testCase.expectedValue, attribute.Value())
 		})
 	}
 }

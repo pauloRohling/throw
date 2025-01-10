@@ -118,6 +118,28 @@ func LogError(err *throw.Error) {
 - `Any`: Formats any type using the `%+v` format.
 - `Json`: Formats any type as json using the `json.Marshal` function.
 
+## Testing
+
+Throw provides a helper function to assert that the error is of the expected type in a more idiomatic way.
+
+```go
+package fail
+
+import "github.com/pauloRohling/throw"
+
+func AlwaysFail() error {
+	return throw.NewTypedErrorBuilder("MyCustomError").
+		Str("reason", "something went wrong").
+		Int("code", 500).
+		Msg("An error has occurred!")
+}
+
+func TestAlwaysFail(t *testing.T) {
+	err := AlwaysFail()
+	throw.AssertType(t, err, "MyCustomError")
+}
+```
+
 ## License
 
 Throw is released under the [MIT License](https://github.com/pauloRohling/throw/blob/main/LICENSE).
