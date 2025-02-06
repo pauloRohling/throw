@@ -8,14 +8,17 @@ type Attribute interface {
 
 // Error represents an error that can be built using the [ErrorBuilder].
 type Error struct {
-	attributes []Attribute
+	attributes map[string]Attribute
 	message    string
 	errType    string
 	err        error
 }
 
 func newError(errType string) *Error {
-	return &Error{errType: errType}
+	return &Error{
+		errType:    errType,
+		attributes: make(map[string]Attribute),
+	}
 }
 
 // Error returns the error message.
@@ -30,7 +33,17 @@ func (error *Error) Unwrap() error {
 
 // Attributes returns the attributes of the error.
 func (error *Error) Attributes() []Attribute {
-	return error.attributes
+	attributes := make([]Attribute, 0, len(error.attributes))
+	for _, attribute := range error.attributes {
+		attributes = append(attributes, attribute)
+	}
+	return attributes
+}
+
+// Attribute returns the attribute with the given key.
+// If the attribute does not exist, nil is returned.
+func (error *Error) Attribute(key string) Attribute {
+	return error.attributes[key]
 }
 
 // Type returns the type of the error.
@@ -39,5 +52,5 @@ func (error *Error) Type() string {
 }
 
 func (error *Error) add(attribute Attribute) {
-	error.attributes = append(error.attributes, attribute)
+	error.attributes[attribute.Key()] = attribute
 }
