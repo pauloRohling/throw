@@ -145,6 +145,18 @@ func (builder *ErrorBuilder) Float64(key string, value float64) *ErrorBuilder {
 	return builder
 }
 
+// Attribute adds an attribute to the error and returns the builder for chaining.
+func (builder *ErrorBuilder) Attribute(attribute Attribute) *ErrorBuilder {
+	builder.err.add(attribute)
+	return builder
+}
+
+// Attr adds an attribute to the error and returns the builder for chaining. It is a shorthand for [ErrorBuilder.Attribute].
+func (builder *ErrorBuilder) Attr(attribute Attribute) *ErrorBuilder {
+	builder.err.add(attribute)
+	return builder
+}
+
 // Msg sets the error message and returns the error. It ends the chain of methods.
 func (builder *ErrorBuilder) Msg(message string) *Error {
 	builder.err.message = message

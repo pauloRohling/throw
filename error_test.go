@@ -11,6 +11,18 @@ type AStruct struct {
 	Age  int    `json:"age"`
 }
 
+type AAttribute struct {
+	key string
+}
+
+func (attribute *AAttribute) Key() string {
+	return attribute.key
+}
+
+func (attribute *AAttribute) Value() string {
+	return "value"
+}
+
 func TestError(t *testing.T) {
 	aStructValue := AStruct{Name: "Lorem Ipsum", Age: 20}
 
@@ -33,6 +45,8 @@ func TestError(t *testing.T) {
 		Uint64("uage64", 64).
 		Float32("float32", 20.32).
 		Float64("float64", 20.32).
+		Attribute(&AAttribute{key: "key1"}).
+		Attr(&AAttribute{key: "key2"}).
 		Msg("Some error message")
 
 	errFormatted := NewErrorBuilder().
@@ -45,7 +59,7 @@ func TestError(t *testing.T) {
 	assertEqual(t, someError, err.Unwrap())
 
 	attrs := err.Attributes()
-	assertEqual(t, 15, len(attrs))
+	assertEqual(t, 17, len(attrs))
 
 	assertIsType(t, &attributes.String{}, err.Attribute("key"))
 	assertIsType(t, &attributes.Any{}, err.Attribute("struct"))
@@ -62,4 +76,6 @@ func TestError(t *testing.T) {
 	assertIsType(t, &attributes.Uint64{}, err.Attribute("uage64"))
 	assertIsType(t, &attributes.Float32{}, err.Attribute("float32"))
 	assertIsType(t, &attributes.Float64{}, err.Attribute("float64"))
+	assertIsType(t, &AAttribute{}, err.Attribute("key1"))
+	assertIsType(t, &AAttribute{}, err.Attribute("key2"))
 }
