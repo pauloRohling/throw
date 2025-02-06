@@ -27,3 +27,8 @@ test/c:
 .PHONY: test/v
 test/v:
 	go test -v -race -failfast -buildvcs $(PACKAGES)
+	
+## publish: update pkg.go.dev - tag=?
+.PHONY: publish
+publish:
+	GOPROXY=proxy.golang.org go list -m github.com/pauloRohling/throw@$(tag)
