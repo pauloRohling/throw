@@ -1,6 +1,7 @@
 package throw
 
 import (
+	"errors"
 	"fmt"
 	"github.com/pauloRohling/throw/attributes"
 )
@@ -30,8 +31,32 @@ func NewTypedErrorBuilder(errType string) *ErrorBuilder {
 	}
 }
 
-// Err sets the error and returns the builder for chaining.
+// Err sets the error and returns the builder for chaining. If the error is a [throw.Error], it will
+// add all its attributes to the current error.
 func (builder *ErrorBuilder) Err(err error) *ErrorBuilder {
+	if err == nil {
+		return builder
+	}
+
+	builder.err.err = err
+	builder.err.message = err.Error()
+
+	var throwError *Error
+	if !errors.As(err, &throwError) {
+		return builder
+	}
+
+	for key, attr := range throwError.attributes {
+		if builder.err.attributes[key] == nil {
+			builder.err.attributes[key] = attr
+		}
+	}
+
+	return builder
+}
+
+// PlainErr sets the error and returns the builder for chaining.
+func (builder *ErrorBuilder) PlainErr(err error) *ErrorBuilder {
 	if err != nil {
 		builder.err.err = err
 		builder.err.message = err.Error()

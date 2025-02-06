@@ -1,5 +1,7 @@
 package throw
 
+import "errors"
+
 // Attribute represents an attribute that can be added to an error.
 type Attribute interface {
 	Key() string
@@ -29,6 +31,21 @@ func (error *Error) Error() string {
 // Unwrap returns the underlying error.
 func (error *Error) Unwrap() error {
 	return error.err
+}
+
+// UnwrapOriginal returns the original error.
+func (error *Error) UnwrapOriginal() error {
+	originalError := error.err
+
+	for originalError != nil {
+		var unwrappedError *Error
+		if !errors.As(originalError, &unwrappedError) {
+			break
+		}
+		originalError = unwrappedError.err
+	}
+
+	return originalError
 }
 
 // Attributes returns the attributes of the error.

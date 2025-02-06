@@ -54,6 +54,43 @@ func AlwaysFail() error {
 }
 ```
 
+### Creating an error with a nested error
+
+Throw allows you to create errors with nested errors, which can be useful for capturing more detailed information about
+the error.
+
+```go
+package fail
+
+import (
+	"errors"
+	"github.com/pauloRohling/throw"
+)
+
+func AlwaysFail() error {
+	engineError := errors.New("some complicated engine problem has occurred")
+
+	motorError := throw.NewTypedErrorBuilder("MotorError").
+		Err(engineError).
+		Str("group", "engine").
+		Str("engineId", "5DF81").
+		Msg("Engine could not be started")
+
+	carError := throw.NewTypedErrorBuilder("CarError").
+		Err(motorError).
+		Str("group", "car").
+		Str("carBrand", "Toyota").
+		Str("carModel", "Corolla").
+		Msg("Car could not be started")
+
+	// The attribute of the motorError will be added to the carError
+	// because the motorError is the innermost error.
+	// Note that the attribute 'group' will be overwritten, as it is
+	// already present in the carError.
+	return carError 
+}
+```
+
 ### Logging a throw error using zerolog
 
 The purpose of Throw is to provide a way to add information to errors in a way that can be helpful for many purposes. In

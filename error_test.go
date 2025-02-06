@@ -29,7 +29,7 @@ func TestError(t *testing.T) {
 	someError := errors.New("some error")
 
 	err := NewTypedErrorBuilder("testErrorType").
-		Err(someError).
+		PlainErr(someError).
 		Str("key", "value").
 		Any("struct", aStructValue).
 		Json("json", aStructValue).
@@ -78,4 +78,35 @@ func TestError(t *testing.T) {
 	assertIsType(t, &attributes.Float64{}, err.Attribute("float64"))
 	assertIsType(t, &AAttribute{}, err.Attribute("key1"))
 	assertIsType(t, &AAttribute{}, err.Attribute("key2"))
+}
+
+func TestErrorEmbedding(t *testing.T) {
+	engineError := errors.New("some complicated engine problem has occurred")
+
+	motorError := NewTypedErrorBuilder("MotorError").
+		Err(engineError).
+		Str("group", "engine").
+		Str("engineId", "5DF81").
+		Msg("Engine could not be started")
+
+	carError := NewTypedErrorBuilder("CarError").
+		Err(motorError).
+		Str("group", "car").
+		Str("carBrand", "Toyota").
+		Str("carModel", "Corolla").
+		Msg("Car could not be started")
+
+	assertEqual(t, "Car could not be started", carError.Error())
+	assertEqual(t, "CarError", carError.Type())
+	assertNotNil(t, carError.Attribute("group"))
+	assertNotNil(t, carError.Attribute("engineId"))
+	assertNotNil(t, carError.Attribute("carBrand"))
+	assertNotNil(t, carError.Attribute("carModel"))
+	assertEqual(t, "car", carError.Attribute("group").Value())
+	assertEqual(t, "5DF81", carError.Attribute("engineId").Value())
+	assertEqual(t, "Toyota", carError.Attribute("carBrand").Value())
+	assertEqual(t, "Corolla", carError.Attribute("carModel").Value())
+
+	assertEqual(t, engineError, carError.UnwrapOriginal())
+	assertEqual(t, engineError.Error(), carError.UnwrapOriginal().Error())
 }
