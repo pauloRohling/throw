@@ -1,6 +1,9 @@
 package throw
 
-import "errors"
+import (
+	"errors"
+	"iter"
+)
 
 // Attribute represents an attribute that can be added to an error.
 type Attribute interface {
@@ -24,18 +27,18 @@ func newError(errType string) *Error {
 }
 
 // Error returns the error message.
-func (error *Error) Error() string {
-	return error.message
+func (e *Error) Error() string {
+	return e.message
 }
 
 // Unwrap returns the underlying error.
-func (error *Error) Unwrap() error {
-	return error.err
+func (e *Error) Unwrap() error {
+	return e.err
 }
 
 // UnwrapOriginal returns the original error.
-func (error *Error) UnwrapOriginal() error {
-	originalError := error.err
+func (e *Error) UnwrapOriginal() error {
+	originalError := e.err
 
 	for originalError != nil {
 		var unwrappedError *Error
@@ -48,26 +51,28 @@ func (error *Error) UnwrapOriginal() error {
 	return originalError
 }
 
-// Attributes returns the attributes of the error.
-func (error *Error) Attributes() []Attribute {
-	attributes := make([]Attribute, 0, len(error.attributes))
-	for _, attribute := range error.attributes {
-		attributes = append(attributes, attribute)
+// Attributes returns an iterator that yields the error attributes.
+func (e *Error) Attributes() iter.Seq[Attribute] {
+	return func(yield func(Attribute) bool) {
+		for _, value := range e.attributes {
+			if !yield(value) {
+				return
+			}
+		}
 	}
-	return attributes
 }
 
 // Attribute returns the attribute with the given key.
 // If the attribute does not exist, nil is returned.
-func (error *Error) Attribute(key string) Attribute {
-	return error.attributes[key]
+func (e *Error) Attribute(key string) Attribute {
+	return e.attributes[key]
 }
 
 // Type returns the type of the error.
-func (error *Error) Type() string {
-	return error.errType
+func (e *Error) Type() string {
+	return e.errType
 }
 
-func (error *Error) add(attribute Attribute) {
-	error.attributes[attribute.Key()] = attribute
+func (e *Error) add(attribute Attribute) {
+	e.attributes[attribute.Key()] = attribute
 }

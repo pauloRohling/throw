@@ -16,14 +16,14 @@ const (
 )
 
 // String returns the string representation of the ErrorType
-func (errorType ErrorType) String() string {
-	return string(errorType)
+func (e ErrorType) String() string {
+	return string(e)
 }
 
 // StatusCode returns the HTTP status code associated with the ErrorType.
 // Defaults to http.StatusInternalServerError
-func (errorType ErrorType) StatusCode() int {
-	switch errorType {
+func (e ErrorType) StatusCode() int {
+	switch e {
 	case ConflictErrorType:
 		return http.StatusConflict
 	case ForbiddenErrorType:

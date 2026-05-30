@@ -124,7 +124,7 @@ func AlwaysFailWithLog() error {
 
 func LogError(err *throw.Error) {
 	logBuilder := log.Error().Err(err.Unwrap())
-	for _, attr := range err.Attributes() {
+	for attr := range err.Attributes() {
 		logBuilder = logBuilder.Str(attr.Key(), attr.Value())
 	}
 	logBuilder.Msg(err.Error())

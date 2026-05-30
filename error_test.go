@@ -2,8 +2,10 @@ package throw
 
 import (
 	"errors"
-	"github.com/pauloRohling/throw/attributes"
+	"slices"
 	"testing"
+
+	"github.com/pauloRohling/throw/attributes"
 )
 
 type AStruct struct {
@@ -15,11 +17,11 @@ type AAttribute struct {
 	key string
 }
 
-func (attribute *AAttribute) Key() string {
-	return attribute.key
+func (a *AAttribute) Key() string {
+	return a.key
 }
 
-func (attribute *AAttribute) Value() string {
+func (a *AAttribute) Value() string {
 	return "value"
 }
 
@@ -58,7 +60,7 @@ func TestError(t *testing.T) {
 	AssertType(t, err, "testErrorType")
 	assertEqual(t, someError, err.Unwrap())
 
-	attrs := err.Attributes()
+	attrs := slices.Collect(err.Attributes())
 	assertEqual(t, 17, len(attrs))
 
 	assertIsType(t, &attributes.String{}, err.Attribute("key"))
